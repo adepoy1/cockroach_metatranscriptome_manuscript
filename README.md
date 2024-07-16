@@ -1,0 +1,1 @@
+# cockroach_metatranscriptome_manuscript
