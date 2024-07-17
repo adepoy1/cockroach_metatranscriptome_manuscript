@@ -8,6 +8,17 @@ First, we need to gather up reference genomes for a taxon of interest. The best 
 The following code can be be used to clean up the file names.
 
 ```
+# This package found here <https://github.com/kblin/ncbi-genome-download> can be used to download a lot of genomes at once. It does nest the genomes in folders, so you'll have to move the .gbff files from those nested files for each genome. 
+# install the package, following installation from <https://github.com/kblin/ncbi-genome-download>
+pip install ncbi-genome-download
+
+# use this command to download reference genomes. 
+# in this case, all genomes from the genus Desulfovibrio
+ncbi-genome-download bacteria --genera Desulfovibrio ## 60 references downloaded.
+
+```
+
+```
 # clean up file names to be just the GCF_ assembly number. 
 # this for loop cuts at second underscore. You may have to edit this code depending on how your reference files are named. 
 for i in *_genomic.gbff
@@ -30,13 +41,20 @@ done
 ```
 
 ```
-### This can be used to download a lot of references at once, but it's a little bit of a pain because it puts them in nested files for each genome. You'll have to move them out of those folders. 
+# Once you have all your reference genomes of interest, you need to concatenate these refs into one file that will be fed into the Anvio Pangenome pipeline. 
+cat *.gbff > all_desulfovibrio_refs.gbff
+
+```
+
+```
+# This can be used to download a lot of references at once. It does nest the genomes, so you'll have to move the .gbff files from those nested files for each genome. 
 pip install ncbi-genome-download
-ncbi-genome-download bacteria --genera Desulfovibrio ## 60 references downloaded. Plus Helen's SCGs
+ncbi-genome-download bacteria --genera Desulfovibrio ## 60 references downloaded.
 
 
 # Once you have all your reference genomes of interest, you need to concatenate these refs into one file that will be fed into the Anvio Pangenome pipeline. 
 cat *.gbff > all_desulfovibrio_refs.gbff
+
 ```
 
 
