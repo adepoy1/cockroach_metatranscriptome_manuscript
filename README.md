@@ -61,7 +61,7 @@ Files needed to run these scripts include:
 	- the names and nodes files get updated fairly regularly, so make sure you get the most updated files. 
 - all top hit files (alltophits_metatranscriptome)
 	- alltophit files are generated using NCBI Blast and the metatranscriptome data. 
-	- Files are in m8 blast format - if more information about generating these files is needed contact Dr. Ottesen (ottesen@uga.edu). We generated these files in alltophits/metatranscriptome using custom lab perl scripts. 
+	- Files are in m8 blast format - We generated these files in alltophits/metatranscriptome using custom lab perl scripts. 
 - gene cluster summary file from anvio (data/)
 
 
@@ -98,7 +98,7 @@ Now that we have these single top hit files, we can gets counts for all of our g
 perl blast_m8_KEGG_counter_v2_RBH_clusters_forAnvio_6.12.2023.pl [single_tophit.txt files (from the previous perl script)] -o [output prefix] -a [gene clusters summary]
 
 # example:
-perl blast_m8_KEGG_counter_v2_RBH_clusters_forAnvio.pl *_Desulfovibrio_by_taxID_single_tophit.txt -o Desulfovibrio_by_taxID -a desulfovibrio-PAN_gene_clusters_summary.txt
+perl blast_m8_KEGG_counter_v2_RBH_clusters_forAnvio_6.12.2023.pl *_Desulfovibrio_by_taxID_single_tophit.txt -o Desulfovibrio_by_taxID -a desulfovibrio-PAN_gene_clusters_summary.txt
 ```
 The main hit file will be in Desulfovibrio_by_taxID_Kegg_hit_hitcounts.txt. The other output files correspond to different levels of KEGG annotations.
 
@@ -107,10 +107,10 @@ You first need to make a diamond database from the transporter database file tha
 
 ```
 # get all top hits 
-perl /Volumes/G-DRIVEThunderbolt3/scripts/perl_scripts/blast_m8_extract_all_tophits.pl Ds_GC_tcdb_matches.m8
+perl /Volumes/G-DRIVEThunderbolt3/scripts/perl_scripts/blast_m8_extract_all_tophits.pl Dv_GC_tcdb_matches.m8
 
 # get the single top hit
-perl /Volumes/G-DRIVEThunderbolt3/scripts/perl_scripts/NR_tophit_from_hitcount_file_m8_all.pl Ds_GC_matches.m8_alltophits -d Ds_GC_TCDB
+perl /Volumes/G-DRIVEThunderbolt3/scripts/perl_scripts/NR_tophit_from_hitcount_file_m8_all.pl Dv_GC_matches.m8_alltophits -d Dv_GC_TCDB
 
 
 # add in header to single top hit file
@@ -118,8 +118,8 @@ perl /Volumes/G-DRIVEThunderbolt3/scripts/perl_scripts/NR_tophit_from_hitcount_f
 match	function	acc	desc	perc_id	start	end	start	end	len	len	e_val	bit
 
 #get TCDB annotations from single top hit file 
-perl /Volumes/G-DRIVEThunderbolt3/scripts/perl_scripts/TCDB_lookup_anvio_GC.pl tcdb_listSuperfamilies.txt tcdb_families.txt Ds_GC_matches.m8_alltophits_single_tophit.txt
+perl /Volumes/G-DRIVEThunderbolt3/scripts/perl_scripts/TCDB_lookup_anvio_GC.pl tcdb_listSuperfamilies.txt tcdb_families.txt Dv_GC_matches.m8_alltophits_single_tophit.txt
 
-# put the TCDB annotations into the GC Kegg hit_hitcount file
+# put the TCDB annotations into the genecluster Kegg hit_hitcount file
 perl /Volumes/G-DRIVEThunderbolt3/scripts/perl_scripts/Cluster_file_annotator_anvio_GC.pl -h /Volumes/G-DRIVEThunderbolt3/genecluster_groups_analysis/anvio_pangenome/Desulfovibrio/anvio_dev/Desulfovibrio_by_taxID_Kegg_hit_hitcounts.txt -o Desulfovibrio_GC_hits_annotated.txt Dv_GC_tcdb_matches2.m8_alltophits_single_tophit.txt_annotated.txt
 ```
