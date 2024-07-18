@@ -10,41 +10,6 @@
 # The anvi-pan-genome step has multiple search options, here: --sensitive is DIAMOND sensitive mode.
 #   > no flag will be the default DIAMOND fast mode. 
 
-
-# Setting up the development branch on the cluster: https://anvio.org/install/#5-follow-the-active-development-youre-a-wizard-arry
-#  > 15G worked for setup; 2G was not enough memory and setup steps were killed
-# ml Miniconda3/4.7.10 
-# conda create -y --name anvio-dev python=3.7
-# conda activate anvio-dev
-
-# install packages
-
-# link to Anvio codebase:
-# cat <<EOF >${CONDA_PREFIX}/etc/conda/activate.d/anvio.sh
-# #creating an activation script for the the conda environment for anvi'o
-# #development branch so (1) Python knows where to find anvi'o libraries,
-# #(2) the shell knows where to find anvi'o programs, and (3) every time
-# #the environment is activated it synchronizes with the latest code from
-# #active GitHub repository:
-# export PYTHONPATH=\$PYTHONPATH:/scratch/hd55218/pangenomes/github_anvio/anvio
-# export PATH=\$PATH:/scratch/hd55218/pangenomes/github_anvio/anvio/bin:/scratch/hd55218/pangenomes/github_anvio/anvio/sandbox
-# echo -e "\033[1;34mUpdating from anvi'o GitHub \033[0;31m(press CTRL+C to cancel)\033[0m ..."
-# cd /scratch/hd55218/pangenomes/github_anvio/anvio && git pull && cd -
-# EOF
-
-
-
-# for the SAGs, anvio doesn't like the dashes. I replaced them with underscores.
-## also, anvio doesn't like periods in file name. change these to underscores
-
-# Installing Anvio on M1 Chip Macs
-# Install Miniforge
-# Having trouble installing some of the required packages?
-#	Try "conda update --all"
-#	Try "conda config --set channel_priority flexible"
-#	Make sure you have only created ONE environment for anvio
-#		check this with "conda info --envs"
-
 # Usage: bash bash_anvio.sh -n 'desulfovibrio'
 
 
@@ -242,21 +207,3 @@ else
 	echo 'We found GCA_ files in your directory! Anvio only likes files from RefSeq, and these start with GCF_ .'
 fi
 
-
-## Displaying the pangenome has to be done on personal computer. It has to open up a server and that is not allowed on the desktop.              
-#anvi-display-pan -p Acholeplasma-PAN/Acholeplasma-PAN-PAN.db \
-#                 -g Acholeplasma-GENOMES.db
-
-
-# pull subgroup-specific transcripts with blast_m8_taxID_assign_and_get_subgroup_v2.pl
-# pick non-redundant tophits from taxon-specific alltophits files
-#echo "starting perl script for NR tophit from alltophits files for $Group..."
-#
-# tally hits by gene cluster, add higher levels of KEGG hierarchy
-# The perl script for this command must be edited to properly find the kegg hierarchy file (ko00001.keg)
-# > See blast_m8_KEGG_counter_v2_RBH_clusters_forAnvio.pl for more info
-#echo "Starting perl script for tallying NR tophits and creating a gene cluster hitcounts table for $Group"
-#perl /Volumes/G-DRIVE\ Thunderbolt\ 3/Helen/META/Diet_Metatranscriptomics/Anvio_pangenome_pipeline/blast_m8_KEGG_counter_v2_RBH_clusters_forAnvio.pl \
-#	./*_"$Group".txt_single_tophit.txt -o "$Group"_by_clusters \
-#	-a /Volumes/G-DRIVE\ Thunderbolt\ 3/Helen/META/Diet_Metatranscriptomics/Anvio_pangenome_pipeline/refs/"$Group"/SUMMARY/"$Group"-PAN_gene_clusters_summary.txt
-#echo "All done! Scroll back up to make sure Anvio steps did not generate any unexpected errors."
